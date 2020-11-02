@@ -1,55 +1,40 @@
 import React, { Component } from 'react';
 
 const StringAPI = "https://aoe2.net/api/strings?game=aoe2de&language=en";
-const LeaderBoard = "https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=3&start=1&count=10"
 const proxyurl = "https://cors-anywhere.herokuapp.com/" // proxy url because of the blocked by CORS issure, remove it if needed.
-let civsList = FetchStringAPI(StringAPI);
-console.log(civsList)
 class CivList extends Component{
-    render(){
-        return(
-            <div>
-                <p></p>
-            </div>
-        )
-    }
-}
+  constructor() {
+    super();
 
-function loadData(){
-  let CivName = ""
-  for (var i = 0; i < 35; i++){
-    CivName += civsList[i];
+    this.state = {Civs: []};
   }
-  //console.log(civsList.name)
-}
 
+  componentDidMount() {
+    this.UserList();
+  }
 
-function FetchStringAPI() {
-  let Civs = [];
-    fetch(proxyurl + StringAPI, {
+  UserList() {
+      fetch(proxyurl + StringAPI, {
         headers: { 'Content-Type': 'application/json' }
     }).then(response => {
         return response.json();
-    }).then((data) => data.civ.forEach(item => {
-    let Civ = new Civilization(item.id, item.string);
-    if(Civs.length<35){
-      Civs.push(Civ);
-    }
-    }));
-    return Civs;
+    }).then((data) => this.setState({ Civs: data.civ }));
   }
-  class Civilization{
-    constructor(id, name){
-      this.id = id;
-      this.name = name;
-    }
-    getId(){
-      return this.id;
-    }
-    getName(){
-      return this.name;
-    }
+
+  render() {
+    const Civs = this.state.Civs.map((item, i) => (
+      <div>
+        <span>{ item.id + 1 }, { item.string }</span>
+      </div>
+    ));
+
+    return (
+      <div>
+        <div>{ Civs }</div>
+      </div>
+    );
   }
-  loadData();
+}
+
 
   export default CivList;
