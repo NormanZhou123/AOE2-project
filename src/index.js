@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import CivList from './components/CivList'
 
 ReactDOM.render(
   <React.StrictMode>
-    
-    <CivList />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
