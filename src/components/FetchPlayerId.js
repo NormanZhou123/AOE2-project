@@ -8,17 +8,17 @@ class FetchPlayerId extends Component{
         }
     }
     render(){
-        let testtext;
+        let display;
         if (this.state.isIdValid){
-            testtext = "Valid"
+            display = "Valid"
         } 
         else{
-            testtext = "Invalid"
+            display = <PlayerProfile />
         }
         return(
             <div>
                 <h3>
-                    The player you are searching for is {testtext}
+                    The player you are searching for is {display}
                 </h3>
             </div>
         )
