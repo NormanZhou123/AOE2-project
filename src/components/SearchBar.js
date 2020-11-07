@@ -1,11 +1,13 @@
 import React from 'react'
 
-function SearchBar(props){
-    return (
-        <div>
-            <input type = 'search' placeholder = {props.placeholder} onChange = {props.handleChange} />
-        </div>
-    )
+class SearchBar extends React.Component {
+    render() {
+        return(
+            <div>
+                <input type = 'search' placeholder = {this.props.placeholder} onChange = {this.props.handleChange} />
+            </div>
+        )
+    }
 }
 
 export default SearchBar;
