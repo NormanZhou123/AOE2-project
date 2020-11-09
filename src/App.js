@@ -6,11 +6,18 @@ import SearchBar from './components/SearchBar'
 import FetchPlayerId from './components/FetchPlayerId'
 
 class App extends React.Component {
+  state ={
+    data: ""
+  }
+
   render(){
     return (
       <div>
       <Header />
-      <SearchBar placeholder = "Enter your id here" handleChange = {(e) => console.log(e.target.value)} />
+      <SearchBar onResult={data =>{
+        this.setState({data})
+      }} />
+      {this.state.data}
       {/* <CivList /> */}
       <FetchPlayerId />
       <Footer />

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-const HistoryAPI = "https://aoe2.net/api/player/matches?game=aoe2de&steam_id=76561199003184910&count=1";
+const HistoryAPI = "https://aoe2.net/api/player/matches?game=aoe2de&steam_id=76561199003184910&count=5";
 const proxyurl = "https://cors-anywhere.herokuapp.com/" // proxy url because of the blocked by CORS issure, remove it if needed.
 class FetchPlayerId extends Component{
     constructor(){
