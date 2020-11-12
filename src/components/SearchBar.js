@@ -7,27 +7,38 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            PlayerProfile: ""
+            inputItems: "",
+            playerList: [],
+            singlePlayer: ""
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange = event =>{
-        this.setState({PlayerProfile: event.target.value});
+        this.setState({inputItems: event.target.value});
     }
 
     handleSubmit = event =>{
         event.preventDefault();
-        fetch(proxyurl + `https://aoe2.net/api/player/matches?game=aoe2de&steam_id=${this.state.PlayerProfile}&count=5`)
+        fetch(proxyurl + 'https://aoe2.net/api/leaderboard?game=aoe2de&leaderboard_id=3&start=1&count=100')
         .then(response => response.json())
         .then(searchRes => {
-            return searchRes[0].players[0].name
+            return searchRes.leaderboard
+            
         })
         .then(data =>{
-            if (this.props.onResult) {
-                this.props.onResult(data)
-            }
+            // if (this.props.onResult) {
+            //     this.props.onResult(data)
+            // }          
+            
+            this.setState({playerList: data})  
+            return this.state.playerList
+        })
+        .then(items => {
+            items.filter(
+                (item) => item.name.toLowerCase().startsWith(this.inputItems.toLowerCase())  // Cannot read property 'toLowerCase' of undefined(Why is 'item' undifined? it's supposed to be the list item of playerList)
+                )
         })
         .catch(err =>console.log(err))
     }
@@ -36,7 +47,7 @@ class SearchBar extends React.Component {
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.PlayerProfile} onChange={this.handleChange} placeholder="Search for player" />
+                    <input type="text" value={this.state.inputItems} onChange={this.handleChange} placeholder="Search for player" />
                     <input type="submit" value="Search" />
                 </form>
             </div>
